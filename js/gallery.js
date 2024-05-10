@@ -64,17 +64,28 @@ const images = [
   },
 ];
 
-const list = document.querySelector('gallery');
-function makeMarkup() {
+const galleryList = document.querySelector('.gallery');
 
-   return  `<li class="gallery-item">
-  <a class="gallery-link" href=${images.original}">
+function makeMarkup(array) {
+    return array
+   .map((image) => `<li class="gallery-item">
+  <a class="gallery-link" href=${image.original}">
     <img
       class="gallery-image"
-      src= ${images.preview}
+      src= ${image.preview}
       data-source="large-image.jpg"
-      alt=${images.description}
+      alt=${image.description}
     />
   </a>
 </li>`
+    )
+    .join("")
 }
+
+galleryList.innerHTML = makeMarkup(images);
+
+const galleryLink = document.querySelector('.gallery-link');
+galleryLink.addEventListener('click', e => {
+    e.preventDefault();
+});
+
