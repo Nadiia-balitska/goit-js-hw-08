@@ -65,16 +65,18 @@ const images = [
 ];
 
 const galleryList = document.querySelector('.gallery');
-// const galleryItem = document.querySelector('.gallery-item')
+
+let modal = null;
+
 
 function imageTemplate(image) {
   return `<li class="gallery-item">
-  <a class="gallery-link" href=${image.original}">
+  <a class="gallery-link" href="${image.original}">
     <img
       class="gallery-image"
       src= ${image.preview}
-      data-source="large-image.jpg"
-      alt=${image.description}
+      data-source="${image.original}"
+      alt="${image.description}"
     />
   </a>
 </li>`
@@ -92,33 +94,25 @@ galleryList.innerHTML = markup;
 galleryList.addEventListener('click', e => {
   e.preventDefault();
   if (e.target == e.currentTarget) return;
-  console.log(e.target);
+  
+  const src = e.target.dataset.source;
+  const alt = e.target.alt;
 
-//    const galleryItem = e.target.closest('.gallery-item');
-// const largeImageSrc = galleryItem.querySelector('.gallery-image').getAttribute('data-source');
- 
-  // const instance = basicLightbox.create(`<img
-  //    src= ${largeImageSrc}  />`);
+  openModal(src, alt);
 
-  openModal(images);
-  // instance.show();
 
 });
 
-
-
-
-
 //?==================================================================
-function openModal(image) {
+function openModal(src, alt) {
  
   const markup = `
     <img
-      src= ${image.original}
+      src= "${src}" alt"${alt}"
     />`;
   
   
-  const modal = basicLightbox.create(markup, {
+  modal = basicLightbox.create(markup, {
     onShow: (instance) => {
       window.addEventListener('keydown', onModalClose)
 },
