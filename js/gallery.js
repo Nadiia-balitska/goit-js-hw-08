@@ -65,10 +65,10 @@ const images = [
 ];
 
 const galleryList = document.querySelector('.gallery');
+// const galleryItem = document.querySelector('.gallery-item')
 
-function makeMarkup(array) {
-    return array
-   .map((image) => `<li class="gallery-item">
+function imageTemplate(image) {
+  return `<li class="gallery-item">
   <a class="gallery-link" href=${image.original}">
     <img
       class="gallery-image"
@@ -78,14 +78,61 @@ function makeMarkup(array) {
     />
   </a>
 </li>`
-    )
-    .join("")
-}
+};
 
-galleryList.innerHTML = makeMarkup(images);
+function imagesTemplate(arr) {
+  return arr.map(imageTemplate).join('');
+};
 
-const galleryLink = document.querySelector('.gallery-link');
-galleryLink.addEventListener('click', e => {
-    e.preventDefault();
+const markup = imagesTemplate(images);
+galleryList.innerHTML = markup;
+
+
+
+galleryList.addEventListener('click', e => {
+  e.preventDefault();
+  if (e.target == e.currentTarget) return;
+  console.log(e.target);
+
+//    const galleryItem = e.target.closest('.gallery-item');
+// const largeImageSrc = galleryItem.querySelector('.gallery-image').getAttribute('data-source');
+ 
+  // const instance = basicLightbox.create(`<img
+  //    src= ${largeImageSrc}  />`);
+
+  openModal(images);
+  // instance.show();
+
 });
+
+
+
+
+
+//?==================================================================
+function openModal(image) {
+ 
+  const markup = `
+    <img
+      src= ${image.original}
+    />`;
+  
+  
+  const modal = basicLightbox.create(markup, {
+    onShow: (instance) => {
+      window.addEventListener('keydown', onModalClose)
+},
+
+    onClose: (instance) => {
+    window.removeEventListener('keydown', onModalClose)
+  }
+  });
+
+  modal.show();
+}
+function onModalClose(e) {
+  if (e.code === 'Escape') modal.close();
+ }
+//?==================================================================
+
 
