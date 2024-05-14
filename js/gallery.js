@@ -107,9 +107,9 @@ galleryList.addEventListener('click', e => {
 function openModal(src, alt) {
  
   const markup = `
-    <img
+  <div> <img
       src= "${src}" alt"${alt}"
-    />`;
+    /></div>`;
   
   
   modal = basicLightbox.create(markup, {
