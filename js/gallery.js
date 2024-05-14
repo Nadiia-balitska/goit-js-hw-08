@@ -107,8 +107,8 @@ galleryList.addEventListener('click', e => {
 function openModal(src, alt) {
  
   const markup = `
-  <div> <img
-      src= "${src}" alt"${alt}"
+  <div class = "container"> <img
+    class="modal-image"  src= "${src}" alt"${alt}"
     /></div>`;
   
   
